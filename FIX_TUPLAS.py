@@ -8,12 +8,22 @@ Created on Mon Aug 19 08:22:48 2024
 #LISTA DE FIXAÇÃO DE TUPLAS
 
 
-# 2A
-'''
+# 2A --------------------------------
 def recebeString(s):
-'''    
+    maior=s[0]
+    cont=0
+    for letra in s:
+        if letra>maior:
+            maior=letra
+    for letra in s:
+        if letra==maior:
+            cont+=1
+    return (maior,cont)
 
-# 2B
+resp=recebeString('baboseirasssss')
+print(resp)   
+
+# 2B --------------------------------
 
 def minmax(lista):
     maior=lista[0]
@@ -33,6 +43,8 @@ def minmax(lista):
     return ((menor,contMenor),(maior,contMaior))
 
 lista=[1,3,2,5.3,1,78,5,8,6,8,5]
+
+# 4 ----------------------------------
 
 
     
