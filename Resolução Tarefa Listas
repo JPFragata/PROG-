@@ -1,0 +1,72 @@
+def busca(l,valor):
+    for(pos,val) in enumerate(l):
+        if val[0] == valor:
+            return pos
+    return None
+
+# Função para atualizar as inscrições
+def atualizar_inscricoes(lparticipantes, latividades):
+    for participante in lparticipantes:
+        nome_participante = participante[0]
+        atividades_inscritas = participante[3]
+        for atividade in atividades_inscritas:
+            pos=busca(latividades, atividade)
+            if pos!=None:
+                    latividades[pos][1].append(nome_participante)
+
+# Função para exibir as atividades e seus inscritos (nome, idade e e-mail)
+def exibir_atividades_com_inscritos(latividades, lparticipantes):
+    for atividade in latividades:
+        nome_atividade = atividade[0]
+        inscritos = atividade[1]
+        print(f"Atividade: {nome_atividade}")
+        if inscritos:
+            print("Inscritos:")
+            for inscrito in inscritos:
+                pos=busca(lparticipantes,inscrito)
+                participante=lparticipantes[pos]
+                print(f"- Nome: {participante[0]}, Idade: {participante[1]}, Email: {participante[2]}")
+        else:
+            print("Nenhum inscrito.")
+        print("-" * 20)
+
+# Função para exibir quem escolheu uma determinada atividade como primeira tarefa
+def exibir_quem_escolheu_primeira_atividade(latividades, lparticipantes, atividade_escolhida):
+    print(f"\nParticipantes que escolheram '{atividade_escolhida}' como primeira atividade:")
+    encontrados = False
+    for participante in lparticipantes:
+        if participante[3] and participante[3][0] == atividade_escolhida:
+            print(f"- {participante[0]}")
+            encontrados = True
+    if not encontrados:
+        print(f"Nenhum participante escolheu '{atividade_escolhida}' como primeira atividade.")
+    print("-" * 20)
+
+# Lista de atividades, onde cada atividade tem uma lista de inscritos, inicialmente vazia
+latividades = [
+    ["Palestra de Abertura", []],
+    ["Workshop de Python", []],
+    ["Workshop de Machine Learning", []],
+    ["Mesa Redonda de IA", []],
+    ["Sessão de Networking", []],
+    ["Palestra de Encerramento", []]
+]
+
+# Lista de participantes, onde cada participante tem uma lista de atividades inscritas
+lparticipantes = [
+    ["Alice Souza", 28, "alice.souza@example.com", ["Workshop de Python", "Mesa Redonda de IA", "Sessão de Networking"]],
+    ["Bruno Silva", 35, "bruno.silva@example.com", ["Palestra de Abertura", "Workshop de Machine Learning"]],
+    ["Carla Mendes", 24, "carla.mendes@example.com", ["Mesa Redonda de IA", "Palestra de Encerramento"]],
+    ["Daniel Oliveira", 31, "daniel.oliveira@example.com", ["Workshop de Python", "Palestra de Encerramento", "Workshop de Machine Learning"]],
+    ["Eduarda Lima", 29, "eduarda.lima@example.com", ["Palestra de Abertura", "Sessão de Networking"]]
+]
+
+# Teste: Atualizar as listas de inscritos nas atividades
+atualizar_inscricoes(lparticipantes, latividades)
+
+# Teste: Exibir as atividades com seus inscritos
+exibir_atividades_com_inscritos(latividades, lparticipantes)
+
+# Teste: Exibir quem escolheu uma atividade específica como 1ª opção
+exibir_quem_escolheu_primeira_atividade(latividades, lparticipantes, "Workshop de Python")
+exibir_quem_escolheu_primeira_atividade(latividades, lparticipantes, "Sessão de Networking")
