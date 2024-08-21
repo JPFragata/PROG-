@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Mon Aug 19 08:22:48 2024
 
 @author: PC14
@@ -62,11 +69,18 @@ else:
 # 4 ----------------------------------
 
 # 4A
-
+'''
+# ERRADO
 def exibeContas(tupla_contas):
     for conta in tupla_contas:
         for item in conta:
             print(item)
+ '''   
+#CERTO
+
+def exibeContas(tupla_contas):
+    for (descricao,valor,dtPgto) in tupla_contas
+        print(f'conta: {descricao}, valor: {valor}, data de pagamento: {dtPgto})
         
 # 4B
 
@@ -85,9 +99,7 @@ def valorMedioContas(tuplas_contas):
 def exibeContasMaisCarasQueValorMedio(tupla_contas):
     valor_medio=valorMedioContas(tupla_contas)
     print(f'Valor médio: R${valor_medio}')
-    for conta in tupla_contas:
-        tipo=conta[0]
-        valor=conta[1]
+    for (tipo,valor) in tupla_contas:
         if valor>valor_medio:
             print(f'Deve pagar a conta de {tipo}')
             
