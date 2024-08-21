@@ -15,13 +15,13 @@ def recebeString(s):
     for letra in s:
         if letra>maior:
             maior=letra
-    for letra in s:
-        if letra==maior:
+            cont=1
+        elif letra==maior
             cont+=1
     return (maior,cont)
 
-resp=recebeString('baboseirasssss')
-print(resp)   
+(maior,cont)=recebeString('baboseirasssss')
+print(f'Maior 
 
 # 2B --------------------------------
 
@@ -43,6 +43,21 @@ def minmax(lista):
     return ((menor,contMenor),(maior,contMaior))
 
 lista=[1,3,2,5.3,1,78,5,8,6,8,5]
+
+# 3 ----------------------------------
+
+def reajuste(minimo,maximo,preco,taxa):
+    if preco>=minimo and preco<=maximo:
+        reajuste=preco*(taxa+1)
+        return (preco,reajuste)
+    else:
+        return(preco)
+
+t=reajuste(10,20,10,1)
+if len(t)==2:
+    print(f'Preco = {t[0]}, Reajuste = {t[1]})
+else:
+    print(f'Preco = {t[0]})
 
 # 4 ----------------------------------
 
