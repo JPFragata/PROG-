@@ -7,6 +7,8 @@ Created on Sun Sep  1 16:32:53 2024
 
 # AGRUPAMENTO E FREQUÊNCIA EM TUPLAS
 
+#--------------------------------------------------------------- P R I M E I R A  Q U E S T Ã O --------------------------------------------- 
+
 # 1) Combinando/Invertendo tuplas
 # Considere
 # a) uma tupla de tuplas representando animais e 
@@ -99,4 +101,36 @@ def tupla_de_tuplas(tanimais,tlocais):
         lista[pos][1].append(animal)        #ADICIONA NA LISTA DENTRO DA TUPLA O ANIMAL QUE POSSUI A CARACTERÍSTICA
     return tuple(lista)                     #RETORNA A LISTA COM TUPLAS EM FORMA DE UMA TUPLA DE TUPLAS
             
- 
+#--------------------------------------------------------------- S E G U N D A  Q U E S T Ã O ---------------------------------------------   
+
+# 2 -Considere uma tupla de eventos que ocorreram em diferentes cidades. 
+# Cada evento é representado por uma tupla contendo o nome da cidade, 
+# o nome do evento e o ano em que o evento ocorreu. 
+# Seu objetivo é constrir uma função que agrupe os eventos por cidade, 
+# de modo que cada cidade tenha uma lista de todos os eventos (evento,ano) que 
+# ocorreram nela.
+# tupla gerada para o exemplo
+# (('São Paulo',[('Carnaval', 2022),('Fórmula 1', 2021),('Bienal do Livro', 2023),('Fórmula 1', 2022)]),
+#  ('Rio de Janeiro',[('Rock in Rio', 2022), ('Carnaval', 2023), ('Festa de Ano Novo', 2022)]),
+#  ('Salvador', [('Carnaval', 2023), ('Festival de Verão', 2022)]))
+
+eventos = (("São Paulo", "Carnaval", 2022),
+    ("Rio de Janeiro", "Rock in Rio", 2022),
+    ("São Paulo", "Fórmula 1", 2021),
+    ("Salvador", "Carnaval", 2023),
+    ("São Paulo", "Bienal do Livro", 2023),
+    ("Rio de Janeiro", "Carnaval", 2023),
+    ("Salvador", "Festival de Verão", 2022),
+    ("São Paulo", "Fórmula 1", 2022),
+    ("Rio de Janeiro", "Festa de Ano Novo", 2022),
+)
+
+def constroi_lista_eventos(eventos):            #MESMA ESTRUTURA DA QUESTÃO 01
+    lista = []
+    for (cidade,evento,ano) in eventos:
+        pos = busca(lista,cidade)               # Verifica se a cidade já está na lista agrupada
+        if pos == None:
+            lista.append((cidade,[]))
+            pos=-1
+        lista[pos][1].append((evento,ano))
+    return tuple(lista) 
