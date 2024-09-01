@@ -1,0 +1,102 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Sep  1 16:32:53 2024
+
+@author: jpfragata
+"""
+
+# AGRUPAMENTO E FREQUÊNCIA EM TUPLAS
+
+# 1) Combinando/Invertendo tuplas
+# Considere
+# a) uma tupla de tuplas representando animais e 
+# b) outra tupla de tuplas representando os tipos de locais onde esses animais residem. 
+# Estas tuplas estão na mesma ordem e todos os animais tem local de residência
+# O objetivo é combinar as duas tuplas para associar cada animal ao seu respectivo habitat.
+
+
+# 1a) construa a  função combinar_animais_locais que combina as informações em uma
+#  nova tupla de tuplas. Cada nova tupla contém o nome do animal, a característica 
+#  e o habitat.
+ 
+ 
+#  1b) construa a função exibir_animais_com_locais que exibe cada animal com sua 
+#     característica e o tipo de local onde ele vive, formatado de maneira legível.
+    
+# Saída esperada para o exemplo:
+#     Leão (Carnívoro) vive em Savana
+#     Elefante (Herbívoro) vive em Floresta
+#     Tubarão (Carnívoro) vive em Oceano
+#     Pinguim (Carnívoro) vive em Antártida
+#     Girafa (Herbívoro) vive em Savana
+    
+# 1c) construa uma tupla de tuplinhas onde cada tuplinha possui: 
+#     (característica, lista e animais com esta característica)
+#    tupla resultante:
+#        (("Carnívoro",["Leão","Tubarão","Pinguim"]),
+#         ("Herbívoro",["Elefante","Girafa"]))
+
+
+# tupla de animais
+tanimais = (
+    ("Leão", "Carnívoro"),
+    ("Elefante", "Herbívoro"),
+    ("Tubarão", "Carnívoro"),
+    ("Pinguim", "Carnívoro"),
+    ("Girafa", "Herbívoro"),
+)
+
+# tupla de locais
+tlocais = (
+    ("Leão", "Savana"),
+    ("Elefante", "Floresta"),
+    ("Tubarão", "Oceano"),
+    ("Pinguim", "Antártida"),
+    ("Girafa", "Savana"),
+)
+
+# 1A) ------------------------------------------------------------------------
+
+def combinar_animais_locais(tanimais,tlocais):
+    tupla = []
+    for (pos,(animal,carac)) in enumerate(tanimais):
+        local = tlocais[pos][1]
+        tupla.append((animal,carac,local))
+    return tuple(tupla)
+        
+#NESSA QUESTÃO, EM AMBAS AS LISTAS DE TUPLAS, O ANIMAL ESTÁ NA MESMA POSIÇÃO
+#ENTÃO NÃO É NECESSÁRIO USAR A FUNÇÃO AUXILIAR 'BUSCA'
+#USAMOS O ENUMERATE, POIS PRECISAMOS DO ÍNDICE DA TUPLA DE CADA ANIMAL, PARA PODER
+#PERCORRER A TUPLA DE LOCAIS. PARA CADA ANIMAL, O LOCAL DELE ESTÁ NA TUPLA DE MESMO
+#ÍNDICE DA TUPLA DE CARACTERÍSTICAS. ENTÃO PARA CADA ÍNDICE DESSES, ACGAMO O LOCAL 
+#ATRAVÉS DELE E DO ÍNDICE [1], QUE CORRESPONDE À POSIÇÃO FIXA NA TUPLA LOCAIS.
+
+# 1B) ------------------------------------------------------------------------
+
+def exibir_animais_com_locais(tanimais,tlocais):
+    for (pos,(animal,carac)) in enumerate(tanimais):
+        local = tlocais[pos][1]
+        print(f'O {animal} ({carac}) vive em {local}')
+        
+#MESMA COISA DA QUESTÃO ANTERIOR, SÓ QUE AQUI NÓS APENAS EXIBIMOS AS INFORMAÇÕES
+#FORMATADAS CONFORME SOLICITADO NO ENUNCIADO
+
+# 1C) ------------------------------------------------------------------------
+
+def busca(lista,valor):
+    for (pos,elemento) in enumerate(lista):
+        if elemento[0]==valor:
+            return pos
+    return None
+        
+def tupla_de_tuplas(tanimais,tlocais):
+    lista = []
+    for (animal,carac) in tanimais:         #PARA CADA ANIMAL E CARACTERISTICA NA TUPLA DE ANIMAIS
+        pos=busca(lista,carac)              #A POSIÇÃO DO ANIMAL É ACHADA PELA FUNÇÃO AUXILIAR 'BUSCA'
+        if pos == None:                     #SE A POSIÇÃO NÃO EXISTIR
+            lista.append((carac,[]))        #ADICIONA UMA TUPLA COM A CARACTERISTICA E UMA LISTA VAZIA NA LISTA INICIAL
+            pos=-1                          #REDUZ 1 DO ÍNDICE ---NÃO ENTENDI---
+        lista[pos][1].append(animal)        #ADICIONA NA LISTA DENTRO DA TUPLA O ANIMAL QUE POSSUI A CARACTERÍSTICA
+    return tuple(lista)                     #RETORNA A LISTA COM TUPLAS EM FORMA DE UMA TUPLA DE TUPLAS
+            
+ 
