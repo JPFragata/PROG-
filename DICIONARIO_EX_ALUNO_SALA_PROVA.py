@@ -145,7 +145,7 @@ def inverteDicionario(dAlunosTurmas):
         dTurmasAlunos[turma] = lAlunos_turma
     return dTurmasAlunos
         
-# ---------------------------PROBLEMA NA F--------------------------------------------------       
+# -----------------------------------------------------------------------------       
 # f) Utilizando o dicionário dTurmasAlunos ( chave: Turma, valor: lista de alunos) 
 #     construa o dicionário dLabComTurmas 
 #         onde a chave é o laboratório e 
@@ -156,13 +156,14 @@ def inverteDicionario(dAlunosTurmas):
 # 	 'L314' :  {'33C’ : [   'Pedro',  'Lola']}
 # 	     }
 
-def constroiDicLabComTurmas(dAlunosTurmas,dTurmasLabProvas):
+def constroiDicLabComTurmas(dTurmasLabProvas):
     dicDeDic = {}
-    dicTurmaListaAlunos = inverteDicionario(dAlunosTurmas)
-    for (turma,listaAlunos) in dicTurmaListaAlunos.items():
-        lab = dTurmasLabProvas.get(turma,'inex')
-        if lab != 'inex':
-            dicDeDic[lab] = {turma:listaAlunos}
+    dTurmasAlunos = inverteDicionario(dAlunosTurmas)
+    for (turma,sala) in dTurmasLabProvas.items():
+        if sala not in dicDeDic:
+            dicDeDic[sala] = {}
+        if turma in dTurmasAlunos:
+            dicDeDic[sala][turma] = dTurmasAlunos[turma]
     return dicDeDic
     
 #ESTÁ COLOCANDO APENAS A TURMA 33G, POIS ESTA ESTÁ SOBRESCREVENDO A 33A
