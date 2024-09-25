@@ -5,7 +5,6 @@ Spyder Editor
 This is a temporary script file.
 """
 
-
 # Considere
 # -->um dicionário chamado dLivros, onde as chaves são os nomes dos autores, 
 # e os valores são dicionários internos que contêm as seguintes informações sobre 
@@ -138,12 +137,6 @@ def mesmoContinente(dLivros,dNacionalidadeContinente,autor1,autor2):
         else:
             print(f'{autor1} é do continente {cont1} e {autor2} é do continente {cont2}')
             
-        
-        
-            
-    
-
-
 
 ###################################################   
 # Questão 1.F:
@@ -154,8 +147,16 @@ def mesmoContinente(dLivros,dNacionalidadeContinente,autor1,autor2):
 ###################################################
 #  Escreva a seguir a função qtLivrosPorContinente
  
-
-
+def QtLivrosPorContinente(dLivros,dNacionalidadeContinente):
+    dic={}
+    for (autor,dicInterno) in dLivros.items():                  #PARA CADA AUTOR E SEU DICIONARIO INTERNO COM SUAS INFORMAÇÕES NO DICIONARIO DE LIVROS
+        nacionalidade = dicInterno['nacionalidade']             #A NACIONALIDADE É O VALOR DA CHAVE 'NACIONALIDADE' NO DICIONARIO INTERNO
+        continente = dNacionalidadeContinente[nacionalidade]    #O CONTINENTE É O VALOR DA CHAVE 'NACIONALIDADE' NO DICIONARIO DE CONTINENTES
+        total_vendidos = dicInterno['total_vendidos']           #A QUANTIDADE DE LIVROS VENDIDAS PELO AUTOR É O VALOR DA CHAVE 'TOTAL DE VENDAS' NO DICIONÁRIO INTERNO
+        qtd_livros = dic.get(continente,0)                      #PROCURA SE TEM A CHAVE CONTINENTE NO NOVO DICIONARIO VAZIO. COMO NÃO TEM, A QUANTIDADE ASSUME O VALOR 0 (ZER0)
+        dic[continente]=qtd_livros+total_vendidos               #ADICIONA AO DICIONÁRIO VAZIO COMO CHAVE O CONTINENTE E COMO VALOR A QUANTIDADE INICIAL DE VENDAS (ZERO)...
+    return dic                                                      #...ACRESCIDA DO VALOR DE VENDAS DO AUTOR DA VEZ.
+        
        
 ###################################################        
 # Questão 1.G:
@@ -167,7 +168,17 @@ def mesmoContinente(dLivros,dNacionalidadeContinente,autor1,autor2):
 ###################################################
 #  Escreva a seguir a função livrosPorContinente
 
-
+def LivrosPorContinente(dLivros,dNacionalidadeContinente):
+    dic={}
+    for (autor,dicInterno) in dLivros.items():
+        nacionalidade = dicInterno['nacionalidade']
+        continente = dNacionalidadeContinente[nacionalidade]
+        livros = dicInterno['títulos']
+        novoDicInt = dic.get(continente,{})
+        novoDicInt[autor] = livros
+        dic[continente] = novoDicInt
+    return dic
+        
 
 ###################################################
 #  BP para teste de suas funções
@@ -302,15 +313,15 @@ mesmoContinente(dLivros, dNacionalidadeContinente, "Machado de Assis", "Gabriel 
 mesmoContinente(dLivros, dNacionalidadeContinente, "J.K. Rowling", "Haruki Murakami")  # Esperado: continentes diferentes
 
 # # Teste da função QtLivrosPorContinente
-# print("\nTeste 1.F - QtLivrosPorContinente")
+print("\nTeste 1.F - QtLivrosPorContinente")
 
-# dvendas_por_continente = QtLivrosPorContinente(dLivros, dNacionalidadeContinente)
-# print(dvendas_por_continente)
+dvendas_por_continente = QtLivrosPorContinente(dLivros, dNacionalidadeContinente)
+print(dvendas_por_continente)
 # # Esperado: {'Europa': 2840000000, 'América do Sul': 125000000, 'Ásia': 20000000, 'América do Norte': 430000000}
 
 # # Teste da função LivrosPorContinente
-# print("\nTeste 1.G - LivrosPorContinente")
+print("\nTeste 1.G - LivrosPorContinente")
 
-# dlivros_por_continente = LivrosPorContinente(dLivros, dNacionalidadeContinente)
-# print(dlivros_por_continente)
+dlivros_por_continente = LivrosPorContinente(dLivros, dNacionalidadeContinente)
+print(dlivros_por_continente)
 # # Esperado: {'Europa': {'J.K. Rowling': ['Harry Potter e a Pedra Filosofal', 'Harry Potter e a Câmara Secreta'], 'J.R.R. Tolkien': ['O Senhor dos Anéis', 'O Hobbit'], 'George Orwell': ['1984', 'A Revolução dos Bichos'], 'Agatha Christie': ['Assassinato no Expresso do Oriente', 'O Caso dos Dez Negrinhos']}, 'América do Sul': {'Gabriel García Márquez': ['Cem Anos de Solidão', 'O Amor nos Tempos do Cólera'], 'Machado de Assis': ['Dom Casmurro', 'Memórias Póstumas de Brás Cubas'], 'Isabel Allende': ['A Casa dos Espíritos', 'Paula']}, 'Ásia': {'Haruki Murakami': ['Kafka à Beira-Mar', 'Norwegian Wood']}, 'América do Norte': {'Stephen King': ['O Iluminado', 'It - A Coisa'], 'Ernest Hemingway': ['O Velho e o Mar', 'Por Quem os Sinos Dobram']}}
