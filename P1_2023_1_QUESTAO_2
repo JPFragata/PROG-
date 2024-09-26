@@ -1,0 +1,53 @@
+
+from classeDATA import *
+
+
+class Arquivo:
+    
+    def __init__(self,nome,autor,data_criacao_texto=''):
+        self.nome = nome
+        self.autor = autor
+        self.dtCriacao = Data(data_criacao)
+        self.txt = texto
+        self.dtMod = self.dtCriacao
+        return
+    
+    def __str__(self):
+        return (f'{}.txt - {} - {} - {}'.format(self.nome,self.autor,self.dtCriacao,Arquivo.tamanho(self)))
+                                                
+    def __repr__(self):
+        return (f'{}.txt - {} - {} - {}'.format(self.nome,self.autor,self.dtCriacao,Arquivo.tamanho(self)))
+   
+    def _add__(self,outro):
+        return Arquivo(self.nome+outro.nome,'sistema',self.txt+'\n'+outro.txt,Data())
+    
+    def tamanho(self):
+        return len(self.txt)
+    
+    def substituiTexto(texto,data):         #recebe objeto da classe data, então não sei se preciso contruir objeto na função
+        self.txt = texto
+        self.dtMod = Data(data)
+        return
+    
+    def adicionaTexto(texto,data):
+        self.txt = selftxt+'. '+texto
+        self.dtMod = Data(data)
+        return
+    
+    def ultimaAlteracaoNaData(data):
+        return self.dtMod == Data(data)
+    
+class Pasta:
+    
+    def __init__(self,nome):
+        self.nome = nome
+        self.arq = []
+        return
+    
+    def __str__(self):
+        return ('{} - {} arquivos'.format(self.nome,len(self.arq)))
+    
+    def __repr__(self):
+        return ('{} - {} arquivos'.format(self.nome,len(self.arq)))
+
+    
