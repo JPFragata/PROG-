@@ -4,38 +4,41 @@ from classeDATA import *
 
 class Arquivo:
     
-    def __init__(self,nome,autor,data_criacao_texto=''):
+    def __init__(self,nome,autor,data_criacao,texto=''):
         self.nome = nome
         self.autor = autor
-        self.dtCriacao = Data(data_criacao)
+        self.dtCriacao = data_criacao
         self.txt = texto
         self.dtMod = self.dtCriacao
         return
     
     def __str__(self):
-        return (f'{}.txt - {} - {} - {}'.format(self.nome,self.autor,self.dtCriacao,Arquivo.tamanho(self)))
+        return ('Arquivo: {}.txt - Autor: {} - Criado em: {} com {} bytes'.format(self.nome,self.autor,self.dtCriacao,Arquivo.tamanho(self)))
                                                 
     def __repr__(self):
-        return (f'{}.txt - {} - {} - {}'.format(self.nome,self.autor,self.dtCriacao,Arquivo.tamanho(self)))
+        return ('{}.txt - {} - {} - {}'.format(self.nome,self.autor,self.dtCriacao,Arquivo.tamanho(self)))
    
-    def _add__(self,outro):
-        return Arquivo(self.nome+outro.nome,'sistema',self.txt+'\n'+outro.txt,Data())
+    def __add__(self,outro):
+        return Arquivo(self.nome+outro.nome,'sistema',Data(),self.txt+'\n'+outro.txt)
     
     def tamanho(self):
         return len(self.txt)
     
-    def substituiTexto(texto,data):         #recebe objeto da classe data, então não sei se preciso contruir objeto na função
+    def substituiTexto(self,texto,data):         #recebe objeto da classe data, então não sei se preciso contruir objeto na função
         self.txt = texto
-        self.dtMod = Data(data)
+        self.dtMod = data
         return
     
-    def adicionaTexto(texto,data):
-        self.txt = selftxt+'. '+texto
-        self.dtMod = Data(data)
+    def exibeTexto(self):
+        print(self.txt)
+    
+    def adicionaTexto(self,texto,data):
+        self.txt = self.txt+texto
+        self.dtMod = data
         return
     
-    def ultimaAlteracaoNaData(data):
-        return self.dtMod == Data(data)
+    def ultimaAlteracaoNaData(self,data):
+        return self.dtMod == data
     
 class Pasta:
     
@@ -50,4 +53,124 @@ class Pasta:
     def __repr__(self):
         return ('{} - {} arquivos'.format(self.nome,len(self.arq)))
 
+    def incluiArquivo(self,arquivo):
+        return self.arq.append(arquivo)       
+    
+    def exibeArquivos(self):
+        if len(self.arq) == 0:
+            print('Pasta vazia')
+        else:
+            for item in self.arq:
+                print(item)
+ 
+    def alteradosNaData(self,data):
+        for arquivo in self.arq:
+            if arquivo.dtMod == data:
+                print(arquivo)
+    
+
+            
+
+#-------- Área de teste da questao 2 --------
+print('\n------ Teste da Q2 ------')
+
+print("\n=====================================")
+print("ARQUIVOS CRIADOS")
+print("=====================================")
+
+arq1=Arquivo('comprasFrutas','fifi',Data(12,4,2023),'abacate,pera,abacaxi,manga')
+print(arq1)
+print("Texto do arquivo: ")
+arq1.exibeTexto()
+
+# '''Adicionando texto'''
+dtAlteracao=Data(19,4,2023)
+arq1.adicionaTexto(',banana,laranja',dtAlteracao)
+print("\n")
+print(arq1)
+print("Texto do arquivo: ")
+arq1.exibeTexto()
+
+# '''Teste da data da última alteração'''
+if arq1.ultimaAlteracaoNaData(dtAlteracao):
+    print("\n\n-->A última alteração do arquivo FOI em {}".format(dtAlteracao))
+else:
+    print("\n\n-->A última alteração do arquivo NÃO foi em {}}".format(dtAlteracao))
+
+print("--------------------------------")
+print("--------------------------------")
+
+arq2=Arquivo('comprasBebidas','guga',Data(10,4,2023))
+print(arq2)
+print("Texto do arquivo: ")
+arq2.exibeTexto()
+
+# '''Substituindo texto'''
+arq2.substituiTexto('suco,água',Data(21,4,2023))
+print("\n")
+print(arq2)
+print("Texto do arquivo: ")
+arq2.exibeTexto()
+
+print("--------------------------------")
+print("--------------------------------")
+
+# '''Juntando dois arquivos'''
+arq3=arq1+arq2
+print(arq3)
+print("Texto do arquivo: ")
+arq3.exibeTexto()
+
+# '''Teste da data da última alteração'''
+hoje=Data()
+if arq2.ultimaAlteracaoNaData(hoje):
+    print("\n\n-->A última alteração do arquivo FOI em {}".format(hoje))
+else:
+    print("\n\n-->A última alteração do arquivo NÃO foi em {}".format(hoje))
+
+
+print("--------------------------------")
+print("--------------------------------")
+
+arq4=Arquivo('convBibi','bibi',Data(1,4,2023),'juca,keko,kaka,lilo,mano,mimi,dora,zeze')
+print(arq4)
+print("Texto do arquivo: ")
+arq4.exibeTexto()
+
+print("--------------------------------")
+print("--------------------------------")
+
+print("\n======================================")
+print("PASTA CRIADA")
+print("======================================")
+pasta1=Pasta('festaNiver')
+print(pasta1)
+print("--------------------------------")
+print("Arquivos da pasta")
+pasta1.exibeArquivos()
+
+
+print("\n======================================")
+print("ARQUIVOS INCLUIDOS NAS PASTAS")
+print("======================================")
+
+# '''Incluindo arquivos na pasta '''
+pasta1.incluiArquivo(arq1)
+pasta1.incluiArquivo(arq2)
+pasta1.incluiArquivo(arq3)
+pasta1.incluiArquivo(arq4)
+
+# '''Exibindo pasta atualizada'''
+print(pasta1)
+print("Arquivos da pasta")
+pasta1.exibeArquivos()
+print("--------------------------------")
+
+# '''Exibindo arquivos modificados em determinada data'''
+print("Arquivos alterado hoje na pasta {}\n".format(pasta1))
+pasta1.alteradosNaData(Data())
+
+
+print('\n---- Fim do Teste da Q3 ----')          
+        
     
